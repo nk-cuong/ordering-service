@@ -1,4 +1,4 @@
-package com.esoft.orderingservice;
+package com.esoft.orderingservice.service;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;

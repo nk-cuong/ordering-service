@@ -34,7 +34,7 @@ public class CustomerController {
     public ResponseEntity<List<OrderDto>> getOrders(
             @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok()
-                .body(orderingService.getAll());
+                .body(orderingService.getAll(userDetails.getUsername()));
     }
 
     @PostMapping("/orders")
@@ -42,7 +42,7 @@ public class CustomerController {
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody @Valid OrderRequest request) {
         return ResponseEntity.ok()
-                .body(orderingService.create(request, userDetails));
+                .body(orderingService.create(request, userDetails.getUsername()));
     }
 
     @PutMapping("/orders/{orderId}")
@@ -51,14 +51,14 @@ public class CustomerController {
             @PathVariable Long orderId,
             @RequestBody @Valid OrderRequest request) {
         return ResponseEntity.ok()
-                .body(orderingService.update(orderId, request, userDetails));
+                .body(orderingService.update(orderId, request, userDetails.getUsername()));
     }
 
     @DeleteMapping("/orders/{orderId}")
     public ResponseEntity<BaseResponse> deleteOrder(
             @AuthenticationPrincipal UserDetails userDetails,
             @PathVariable Long orderId) {
-        orderingService.delete(orderId, userDetails);
+        orderingService.delete(orderId, userDetails.getUsername());
         return ResponseEntity.ok(new BaseResponse(HttpStatus.OK.value(), "Order deleted successfully"));
     }
 }
